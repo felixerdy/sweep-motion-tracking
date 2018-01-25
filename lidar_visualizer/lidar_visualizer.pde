@@ -52,7 +52,8 @@ void setup() {
   clickedColor = color(200);
   hoverColor = color(150);
   sweep = new SweepSensor(this);
-  sweep.start(Serial.list()[3], SWEEP_SPEED, SWEEP_SAMPLE_RATE);
+  println(Serial.list());
+  sweep.startAsync(Serial.list()[3], SWEEP_SPEED, SWEEP_SAMPLE_RATE);
 }
 
 void keyPressed() {
@@ -62,8 +63,8 @@ void keyPressed() {
   } else if (key == ']') {
     scale = scale + 0.1;
   } else if (key == 'D') {
-    for(SweepRecord rec : records) {
-       println(rec.angle + " " + rec.distance); 
+    for (SweepRecord rec : records) {
+      println(rec.angle + " " + rec.distance);
     }
   }
 }
@@ -71,28 +72,18 @@ void keyPressed() {
 void draw()
 {
   background(55);
-  
-  
-  
-  // distance radius
+
+  // draw distance circles
   stroke(110, 110, 110);
-  strokeWeight(1);
   noFill();
-  ellipse(width / 2, height / 2, 200 * scale, 200 * scale);
-  ellipse(width / 2, height / 2, 400 * scale, 400 * scale);
-  ellipse(width / 2, height / 2, 600 * scale, 600 * scale);
-  ellipse(width / 2, height / 2, 800 * scale, 800 * scale);
-  strokeWeight(4);
-  ellipse(width / 2, height / 2, 1000 * scale, 1000 * scale);
-  strokeWeight(1);
-  ellipse(width / 2, height / 2, 1200 * scale, 1200 * scale);
-  ellipse(width / 2, height / 2, 1400 * scale, 1400 * scale);
-  ellipse(width / 2, height / 2, 1600 * scale, 1600 * scale);
-  ellipse(width / 2, height / 2, 1800 * scale, 1800 * scale);
-  strokeWeight(4);
-  ellipse(width / 2, height / 2, 2000 * scale, 2000 * scale);
-  strokeWeight(1);
-  
+  for (int i = 200; i <= 3000; i += 200) {
+    if (i % 1000 == 0) { // each 5m should be a bold stroke
+      strokeWeight(4);
+    } else {
+      strokeWeight(1);
+    }
+    ellipse(width / 2, height / 2, i * scale, i * scale);
+  }
 
   // record button
   if (overRect1(rect1X, rect1Y, rectWidth, rectHeight)) {
@@ -237,7 +228,7 @@ void showRecords() {
     println(clusters.size());
     for (ArrayList<SweepRecord> cluster : clusters) {
       if (cluster.size() > MIN_CLUSTER_ELEMENTS - 1) {
-        color rand = color(random(255), random(255), random(255));
+        //color rand = color(random(255), random(255), random(255));
         float minx, miny, maxx, maxy;
         minx = miny = maxx = maxy = -1;
         for (SweepRecord clusterPoint : cluster) {

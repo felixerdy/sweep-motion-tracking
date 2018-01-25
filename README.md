@@ -2,7 +2,7 @@
 Motion tracking using [scanse sweep](http://scanse.io/) in [processing](https://processing.org/)
 
 ## Getting Started
-This software is using a modified version of [sweep-processing](https://github.com/cansik/sweep-processing) where I can set the rotation speed as well as the sample rate. Please paste the `SweepProcessing` folder into your Processing Libraries folder (e.g. `Users/<username>/Documents/Processing/libraries`).
+This software is using a  [sweep-processing](https://github.com/cansik/sweep-processing). Please download the latest release [here](https://github.com/cansik/sweep-processing/releases) and save it in your `Processing/libraries` folder.
 
 Now open `lidar_visualizer/lidar_visualizer.pde` in Processing and run the file. __You may need to change number "3" in line 56 according to the port the sweep is connected.__ You can find all available ports in the Processing console after running the software.
 
