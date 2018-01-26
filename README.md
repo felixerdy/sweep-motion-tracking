@@ -12,7 +12,7 @@ After running the Processing script, you will see the current scan measurements.
 ![live recording](movement.gif)
 
 ### Record environment
-Please make sure that there is nobody visible in your room. You can now click on the _Record_ Button and wait until the environment is recorded (it waits 5 seconds since it records and then records 10 seconds).
+Please make sure that there is nobody visible in your room. You can now click on the _Record_ Button and wait until the environment is recorded (it waits 5 seconds till it records and then records 10 seconds).
 
 ### Show movement
 You can now click on the _Movement_ Button and see all movements in the recorded environment.
