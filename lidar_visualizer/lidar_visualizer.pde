@@ -20,6 +20,9 @@ final int DISTANCE_TRESHOLD = 20;
 
 final float CLUSTER_OFFSET = 1.5;
 
+Table table;
+String csvFileName;
+
 // constants
 
 //Button Stuff
@@ -54,6 +57,16 @@ void setup() {
   sweep = new SweepSensor(this);
   println(Serial.list());
   sweep.startAsync(Serial.list()[3], SWEEP_SPEED, SWEEP_SAMPLE_RATE);
+
+  table = new Table();
+  table.addColumn("timestamp");
+  table.addColumn("angle");
+  table.addColumn("distance");
+  table.addColumn("signal-strength");
+  table.addColumn("rotation-rate");
+  table.addColumn("sample-rate");
+
+  csvFileName = "recording_" + getFileNameTimeString() + ".csv";
 }
 
 void keyPressed() {
@@ -166,6 +179,13 @@ void drawSamples() {
     float x =  (width / 2) + tempRec.getCartesianX() * scale;
     float y = (height / 2) - tempRec.getCartesianY() * scale;
     ellipse(x, y, 10, 10);
+    TableRow newRow = table.addRow();
+    newRow.setString("timestamp", getCurrentTimeString());
+    newRow.setFloat("angle", -sample.getAngle());
+    newRow.setFloat("distance", sample.getDistance());
+    newRow.setFloat("signal-strength", sample.getSignalStrength());
+    newRow.setInt("rotation-rate", SWEEP_SPEED);
+    newRow.setInt("sample-rate", SWEEP_SAMPLE_RATE);
   }
 }
 
@@ -266,4 +286,17 @@ void showRecords() {
   catch (Exception e) {
     //println(e);
   }
+}
+
+String getCurrentTimeString() {
+  return year() + "-" + month() + "-" + day() + "T" + hour() + ":" + minute() + ":" + second();
+}
+
+String getFileNameTimeString() {
+  return year() + "-" + month() + "-" + day() + "T" + hour() + "-" + minute() + "-" + second();
+}
+
+void exit() {
+  saveTable(table, "data/" + csvFileName);
+  super.exit();
 }
