@@ -79,6 +79,10 @@ void keyPressed() {
     for (SweepRecord rec : records) {
       println(rec.angle + " " + rec.distance);
     }
+  } else if (key == 'M') {
+     showMovement = !showMovement; 
+  } else if (key == 'R' && !isRecording) {
+     isRecording = true; 
   }
 }
 
@@ -298,5 +302,6 @@ String getFileNameTimeString() {
 
 void exit() {
   saveTable(table, "data/" + csvFileName);
+  sweep.stop();
   super.exit();
 }
